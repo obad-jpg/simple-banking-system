@@ -1,0 +1,180 @@
+import random
+import sqlite3
+
+connection = sqlite3.connect('card.s3db')
+cursor = connection.cursor()
+cursor.execute('''SELECT COUNT(name) FROM sqlite_master WHERE TYPE = 'table' AND NAME = 'card' ''')
+if cursor.fetchone()[0] != 1:
+    cursor.execute('''CREATE TABLE card 
+                      (id INTEGER,
+                      number TEXT,
+                      pin TEXT,
+                      balance INTEGER DEFAULT 0)''')
+    connection.commit()
+
+
+class Card:
+    def __init__(self):
+        self.num = ''
+        self.pin_str = ''
+        self.balance = 0
+
+    def open_account(self):
+        self.num = "400000" + str(format(random.randint(000000000, 999999999), "09d"))
+        self.pin_str = str(format(random.randint(0000, 9999), "04d"))
+
+        helper = 0
+        count = 0
+        for x in self.num:
+        	count += 1
+        	if count % 2 != 1:
+        		helper += int(x)
+        	else:
+        	       if int(x) > 4:
+        	       	helper += int(x) * 2 - 9
+        	       else:
+        	       	helper += int(x) * 2
+        if helper % 10 != 0:
+        	self.num = self.num + str(10 - helper % 10) 
+        else:
+        	self.num = self.num + "0"
+        print("Your card has been created\nYour card number:\n{}\nYour card PIN:\n{}".format(self.num, self.pin_str))
+        cursor.execute('INSERT INTO card VALUES(NULL, {}, {}, {})'.format(self.num, self.pin_str, self.balance))
+        connection.commit()
+
+
+def add_income(number):
+    row = get_account_info(number)
+    income = int(input("Enter income:"))
+    delta = income + row[-1]
+    cursor.execute('UPDATE card SET balance={} WHERE number={}'.format(str(delta), row[1]))
+    connection.commit()
+    print("Income was added!")
+    logged_in_menu(row[1])
+
+
+def do_transfer(number):
+    row = get_account_info(number)
+    print("Transfer")
+    recipient = input("Enter card number:")
+    if recipient == row[1]:
+        print("You can't transfer money to the same account!")
+        logged_in_menu(row[1])
+    elif luhn_checker(recipient):
+        cursor.execute('SELECT * FROM card WHERE number=' + recipient)
+        connection.commit()
+        rec_row = cursor.fetchone()
+        if rec_row:  # record exist
+            amount = int(input("Enter how much money you want to transfer:"))
+            if amount < row[-1]:  # enough balance
+                cursor.execute("UPDATE card SET balance = balance - {} WHERE number = {}".format(amount, row[1]))
+                connection.commit()
+                cursor.execute("UPDATE card SET balance = balance + {} WHERE number = {}".format(amount, recipient))
+                connection.commit()	
+                
+                
+                print("Success!")
+            else:  # When balance is not enough
+                print("Not enough money!")
+        else:  # When no record in db found
+            print("Such a card does not exist.")
+    else:  # When Luhn test fails
+        print("Probably you made a mistake in the card number. Please try again!")
+    logged_in_menu(row[1])
+
+
+def close_account(number):
+    row = get_account_info(number)
+    cursor.execute('DELETE FROM card WHERE number={}'.format(number))
+    connection.commit()
+    print("The account has been closed!")
+    initial_menu()
+
+
+def get_account_info(number):
+    cursor.execute('SELECT * FROM card WHERE number={}'.format(number))
+    connection.commit()
+    return cursor.fetchone()
+
+
+def logged_in_menu(number):
+    row = get_account_info(number)
+    print("1. Balance")
+    print("2. Add income")
+    print("3. Do transfer")
+    print("4. Close account")
+    print("5. Log out")
+    print("0. Exit")
+    user_input = int(input())
+    if user_input == 0:
+        print("Bye!")
+        exit()
+    elif user_input == 5:
+        initial_menu()
+    elif user_input == 1:
+        balance = row[-1]  # return balance
+        print("Balance: {}".format(balance))
+        logged_in_menu(number)
+    elif user_input == 2:
+        add_income(number)
+    elif user_input == 3:
+        do_transfer(number)
+    elif user_input == 4:
+        close_account(number)
+    else:
+        print("Wrong input!")
+        logged_in_menu(number)
+
+
+def initial_menu():
+    print("1. Create an account")
+    print("2. Log into account")
+    print("0. Exit")
+    user_input = int(input())
+    if user_input == 0:
+        print("Bye!")
+        exit()
+    elif user_input == 1:
+        tmp_card = Card()
+        tmp_card.open_account()
+    elif user_input == 2:
+        login()
+    else:
+        print("Wrong input!")
+        initial_menu()
+
+
+def login():
+    card_num_input = input("Enter your card number:")
+    pin_input = input("Enter your PIN:")
+    cursor.execute('SELECT * FROM card WHERE number = {} and pin = {}'.format(card_num_input, pin_input))
+    connection.commit()
+    row = cursor.fetchone()
+    if row:
+        print("You have successfully logged in!")
+        logged_in_menu(row[1])
+    else:
+        print("Wrong card number or PIN!")
+        initial_menu()
+
+
+def luhn_checker(num):
+    first = num[:-1]
+    calc = []
+    for i, n in enumerate(first):
+        if i % 2 == 0:
+            n = str(int(n) * 2)
+        if int(n) > 9:
+            n = str(int(n) - 9)
+        calc.append(n)
+    sum = 0
+    calc.append(num[-1])
+    for i in calc:
+        sum += int(i)
+    if (sum % 10 == 0):
+        return True
+    return False
+
+
+
+initial_menu()
