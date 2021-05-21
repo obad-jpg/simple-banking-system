@@ -22,13 +22,21 @@ class Base:
 			exit()
 	def base10_converter(self):
 		self.x = input('Enter the number: ')
+		t = 0
 		self.z = str(self.x[::-1])
 		self.y = [int(o) for o in self.z]
 		base = int(input('Enter the number base: '))
-		for _, n in enumerate(self.y):
-				self.y[self.y.index(n, _)] = base ** _ * n
-		self.answer = sum(self.y)
-		print(f'The base 10 of {self.x} is {self.answer}')
+		for i in self.y:
+			if i <= base:
+				t += 1
+				if t == len(self.y):
+					for _, n in enumerate(self.y):
+						self.y[self.y.index(n, _)] = base ** _ * n
+					self.answer = sum(self.y)
+					print(f'The base 10 of {self.x} is {self.answer}')
+			else:
+				print(f'Not a valid base number of base {base}')
+				self.welcome_screen()
 	
 	def from_base10_converter(self):
 		z = ''
@@ -46,6 +54,8 @@ class Base:
 		    	if x == 0:
 		    		print(f'The base {y} of {p} is {z[::-1]}')
 		    		break
+
+		
 		    		
 					
 print(Base().welcome_screen())
