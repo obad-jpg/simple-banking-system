@@ -27,7 +27,7 @@ class Base:
 		self.y = [int(o) for o in self.z]
 		base = int(input('Enter the number base: '))
 		for i in self.y:
-			if i <= base:
+			if i < base:
 				t += 1
 				if t == len(self.y):
 					for _, n in enumerate(self.y):
