@@ -1,0 +1,51 @@
+class Base:
+	def __init__(self):
+		self.x = ''
+		self.y = ''
+		self.z = ''
+		self.answer = ''
+	def welcome_screen(self):
+		print('''
+		1. Convert to base 10
+		2. Convert from base 10
+		0. Exit\n''')
+		x = int(input('>'))
+		if x == 1:
+			self.base10_converter()
+			self.welcome_screen()
+		if x == 2:
+			self.from_base10_converter()
+			self.welcome_screen()
+		elif x == 0:
+			print('\n')
+			print('Bye!')
+			exit()
+	def base10_converter(self):
+		self.x = input('Enter the number: ')
+		self.z = str(self.x[::-1])
+		self.y = [int(o) for o in self.z]
+		base = int(input('Enter the number base: '))
+		for _, n in enumerate(self.y):
+				self.y[self.y.index(n, _)] = base ** _ * n
+		self.answer = sum(self.y)
+		print(f'The base 10 of {self.x} is {self.answer}')
+	
+	def from_base10_converter(self):
+		z = ''
+		x = int(input('Enter the base number: '))
+		y = int(input('Enter the base: '))
+		p = x
+		while True:
+		    t = 0
+		    if x != 0:
+		    	m = x % y
+		    	n = x // y
+		    	t += n
+		    	z += str(m)
+		    	x = t
+		    	if x == 0:
+		    		print(f'The base {y} of {p} is {z[::-1]}')
+		    		break
+		    		
+					
+print(Base().welcome_screen())
