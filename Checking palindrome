@@ -1,0 +1,7 @@
+while True:
+	string = input()
+	ss = string[::-1]
+	if string == ss:
+		print('Palindrome')
+	else:
+		print('Not palindrome')
