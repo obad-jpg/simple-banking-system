@@ -1,0 +1,46 @@
+import random
+
+print('Enter the number of friends joining(including you): ')
+n = int(input(''))
+z = []
+print('')
+if n <= 0:
+	print('')
+	print('No one is joining for the party')
+else:
+	print('Enter the name of every friend(including you), each on a new line: ')
+	for _ in range(n):
+		y = input("")
+		z.append(y)
+	dc = dict.fromkeys(z)
+	print('')
+	print('Enter the total bill value: ')
+	ze = int(input())
+	print('')
+	print('Do you want to use the "Who is lucky?" feature? Write Yes/No:')
+	answer = input()
+	if answer == 'Yes':
+		q = random.choice(z)
+		print('')
+		print(f'{q} is the lucky one')
+		ke = ze / (n-1)
+		ce = round(ke, 2)
+		for _ in range(n):
+			dc[z[_]] = ce
+		dc[q] = 0
+		print('')
+		print(dc)
+	elif answer == 'No':
+		print('')
+		print('No one is going to be lucky')
+		ke = ze / n
+		ce = round(ke, 2)
+		for _ in range(n):
+			dc[z[_]] = ce
+		print('')
+		print(dc)
+		
+		
+		
+		
+				
