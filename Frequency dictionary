@@ -1,0 +1,8 @@
+x = input().lower().split()
+y = {}
+for word in x:
+    if word in y:
+        y[word] += 1
+    else:
+        y[word] = 1
+print("\n".join([str(k) + ' ' + str(v) for (k, v) in y.items()]))
