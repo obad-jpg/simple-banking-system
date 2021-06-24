@@ -1,0 +1,277 @@
+class Base:
+	def __init__(self):
+		self.x = ''
+		self.y = ''
+		self.z = ''
+		self.answer = ''
+	def welcome_screen(self):
+		print('''
+		1. Convert to base 10
+		2. Convert from base 10
+		3. Hexadecimal
+		0. Exit\n''')
+		x = int(input('>'))
+		if x == 1:
+			self.base10_converter()
+			self.welcome_screen()
+		if x == 2:
+			self.from_base10_converter()
+			self.welcome_screen()
+		if x == 3:
+			self.hexadecimal_solver()
+			self.welcome_screen()
+		elif x == 0:
+			print('\n')
+			print('Bye!')
+			exit()
+	def base10_converter(self):
+		self.x = input('Enter the number: ')
+		t = 0
+		self.z = str(self.x[::-1])
+		self.y = [int(o) for o in self.z]
+		base = int(input('Enter the number base: '))
+		if base < 10:
+			for i in self.y:
+				if i < base:
+					t += 1
+					if t == len(self.y):
+						for _, n in enumerate(self.y):
+							self.y[self.y.index(n, _)] = base ** _ * n
+						self.answer = sum(self.y)
+						print(f'The base 10 of {self.x} is {self.answer}')
+				else:
+					print(f'Not a valid base number of base{base}\n')
+					self.base10_converter()
+					break
+		else:
+			print('Base must be lesser than 10\n')
+			self.base10_converter()
+			
+	def from_base10_converter(self):
+		z = ''
+		x = int(input('Enter the base number: '))
+		y = int(input('Enter the base: '))
+		p = x
+		while True:
+			t = 0
+			if x != 0:
+				m = x % y
+				n = x // y
+				t += n
+				z += str(m)
+				x = t
+				if x == 0:
+					print(f'{p} in base{y} is {z[::-1]}')
+					break
+			
+	def hexadecimal_solver(self):
+		print('''
+		1. Convert to hexadecimal
+		2. Convert from hexadecimal
+		0. Exit\n''')
+		x = int(input('>'))
+		if x == 1:
+			self.convert_to_hexadecimal()
+			self.hexadecimal_solver()
+		if x == 2:
+			self.convert_from_hexadecimal()
+			self.hexadecimal_solver()
+		elif x == 0:
+			print('\n')
+			self.welcome_screen()
+			
+	def convert_to_hexadecimal(self):
+		dict1 = {'0000':'0','0001':'1', '0010':'2', '0011':'3', '0100':'4', '0101':'5', '0110':'6', '0111':'7', '1000':'8', '1001':'9', '1010':'A', '1011':'B', '1100':'C', '1101':'D', '1110':'E', '1111':'F'}
+		number = input('Enter the number: ')
+		base = int(input('Enter the base: '))
+		num = int(number)
+		nu = number[::-1]
+		no = [int(o) for o in nu]
+		z = ''
+		l = ''
+		w = ''
+		k = 0
+		count = 0
+		answer = ''
+		if base < 16:
+			if base == 10:
+				while True:
+					t = 0
+					if num != 0:
+						m = num % 2
+						n = num // 2
+						t += n
+						z += str(m)
+						num = t
+						if num == 0:
+							answer = (z[::-1])
+							break
+				if len(answer) % 4 != 0:
+					f = len(answer) % 4
+					fe = 4 - f
+					a = fe * str(0)
+					ans = str(a) + str(answer)
+					for i in ans:
+						count += 1
+						l += str(i)
+						if count % 4 == 0:
+							if l in dict1:
+								w += str(dict1[l])
+								l = ''
+								if count == len(ans):
+									print(f'{number} in base {base} is {w} in base 16')
+												
+				else:
+					for i in answer:
+						count += 1
+						l += str(i)
+						if count % 4 == 0:
+							if l in dict1:
+								w += str(dict[l])
+								l = ''
+								if count == len(answer):
+									print(f'{number} in base {base} is {w} in base 16')
+												
+			elif base < 10 or 10 < base < 16:
+				if base == 2:
+					for i in number:
+						if int(i) < base:
+							k += 1
+							if k == len(number):
+								if len(number) % 4 != 0:
+									f = len(number) % 4
+									fe = 4 - f
+									a = fe * str(0)
+									ans = str(a) + str(number)
+									for i in ans:
+										count += 1
+										l += str(i)
+										if count % 4 == 0:
+											if l in dict1:
+												w += str(dict1[l])
+												l = ''
+												if count == len(ans):
+													print(f'{number} in base {base} is {w} in base 16')
+								
+								else:
+									for i in number:
+										count += 1
+										l += str(i)
+										if count % 4 == 0:
+											if l in dict1:
+												w += str(dict1[l])
+												l = ''
+												if count == len(number):
+													print(f'{number} in base {base} is {w} in base 16')
+
+						else:
+							print(f'{number} is not a valid base number of {base}')
+							break
+				else:
+					for i in no:
+						if i < base:
+							k += 1
+							if k == len(no):
+								for _, n in enumerate(no):
+									no[no.index(n, _)] = base ** _ * n
+								result = sum(no)
+								while True:
+									t = 0
+									if result != 0:
+										m = result % 2
+										n = result // 2
+										t += n
+										z += str(m)
+										result = t
+										if result == 0:
+											answer = z[::-1]
+											break
+								if len(answer) % 4 != 0:
+									f = len(answer) % 4
+									fe = 4 - f
+									a = fe * str(0)
+									ans = str(a) + str(answer)
+									for i in ans:
+										count += 1
+										l += str(i)
+										if count % 4 == 0:
+											if l in dict1:
+												w += str(dict1[l])
+												l = ''
+												if count == len(ans):
+													print(f'{number} in base {base} is {w} in base 16')
+																
+									
+								else:
+									for i in answer:
+										count += 1
+										l += str(i)
+										if count % 4 == 0:
+											if l in dict1:
+												w += str(dict1[l])
+												l = ''
+												if count == len(answer):
+													print(f'{number} in base {base} is {w} in base 16')
+																
+						else:
+							print(f'{number} is not a valid base number for base {base}')
+		else:
+			print('Base must be lesser than 16')
+			
+	def convert_from_hexadecimal(self):
+		dict1 = {'A':'10', 'B':'11', 'C':'12', 'D':'13', 'E':'14', 'F':'15'}
+		number = input('Enter the hexadecimal number: ')
+		base = int(input('Enter the base you want to convert it to: '))
+		t = 0
+		p = 0
+		z = str(number[::-1])
+		y = [o for o in z]
+		k = ''
+		if base < 16:
+			if base == 10:
+				for i in y:
+					if i in dict1:
+						t += int(dict1[i]) * 16 ** p
+						p += 1
+					else:
+						t += int(i) * 16 ** p
+						p += 1
+				print(f'The base 10 of {number} is {t}')
+			elif base < 10 or 10 < base < 16:
+				for i in y:
+					if i in dict1:
+						t += int(dict1[i]) * 16 ** p
+						p += 1
+					else:
+						t += int(i) * 16 ** p
+						p += 1
+				while True:
+					q = 0
+					if t != 0:
+						s = t % base
+						e = t // base
+						q += e
+						k += str(s)
+						t = q
+						if t == 0:
+							print(f'{number} in base 16 is {k[::-1]} in base {base}')
+							break
+		else:
+			print('Base must be lesser than 16')
+					
+					
+						
+				
+				
+		
+		
+	
+
+								
+							
+				
+				
+			
+			
+			
+print(Base().welcome_screen())
