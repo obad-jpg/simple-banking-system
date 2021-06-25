@@ -137,6 +137,7 @@ def initial_menu():
     elif user_input == 1:
         tmp_card = Card()
         tmp_card.open_account()
+        initial_menu()
     elif user_input == 2:
         login()
     else:
