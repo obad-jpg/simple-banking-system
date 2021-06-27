@@ -9,7 +9,7 @@ while True:
 		if a == y[0]:
 			print(f'Available formatters: {b}\nSpecial commands: {c}')
 		elif a == y[1]:
-			file = open('markdown.txt', 'w')
+			file = open('output.md', 'w')
 			file.write(z)
 			file.close()
 			exit()
