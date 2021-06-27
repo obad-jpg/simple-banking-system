@@ -1,4 +1,4 @@
-x = ['plain', 'bold', 'italic', 'header', 'link', 'inline-code', 'new-line', 'ordered-list', 'unordered-list']
+x = ['plain', 'bold', 'italic', 'header', 'link', 'inline-code', 'line-break', 'ordered-list', 'unordered-list']
 y = ['!help', '!done']
 z = ''
 b = ' '.join(x)
