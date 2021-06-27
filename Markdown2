@@ -1,0 +1,82 @@
+x = ['plain', 'bold', 'italic', 'header', 'link', 'inline-code', 'new-line', 'ordered-list', 'unordered-list']
+y = ['!help', '!done']
+z = ''
+b = ' '.join(x)
+c = ' '.join(y)
+while True:
+	a = input('choose a formatter: ')
+	if a in y:
+		if a == y[0]:
+			print(f'Available formatters: {b}\nSpecial commands: {c}')
+		elif a == y[1]:
+			file = open('markdown.txt', 'w')
+			file.write(z)
+			file.close()
+			exit()
+	elif a in x:
+		if a == x[0]:
+			o = input('Text: ')
+			z += str(o)
+			print(z)
+		elif a == x[1]:
+			o = input('Text: ')
+			z += '**' + str(o) + '**'
+			print(z)
+		elif a == x[2]:
+			o = input('Text: ')
+			z += '*' + str(o) + '*'
+			print(z)
+		elif a == x[5]:
+			o = input('Text: ')
+			z += '`' + str(o) + '`'
+			print(z)
+		elif a == x[6]:
+			z += '\n'
+			print(z)
+		elif a == x[3]:
+			t = [1, 2, 3, 4, 5, 6]
+			n = int(input('level: '))
+			if n in t:
+				o = input('Text: ')
+				z += ('#' * n) + ' ' + str(o) + '\n'
+				print(z)
+			else:
+					print('The level should be within the range of 1 to 6')
+		elif a == x[4]:
+			label = input('Label: ')
+			url = input('URL: ')
+			z += '[' + str(label) + ']' + '(' + str(url) + ')'
+			print(z)
+		elif a == x[7]:
+			t = 1
+			while True:
+				n = int(input('Number of rows: '))
+				if n > 0:
+					for i in range(n):
+						row = input(f'Row #{t}: ')
+						z += f'{t}. {row}\n'
+						t += 1
+						if t == (n+1):
+							print(z)
+					break
+				else:
+					print('The number of rows should be greater than zero')
+		elif a == x[8]:
+			t = 1
+			while True:
+				n = int(input('Number of rows: '))
+				if n > 0:
+					for i in range(n):
+						row = input(f'Row #{t}: ')
+						z += f'* {row}\n'
+						t += 1
+						if t == (n+1):
+							print(z)
+					break
+				else:
+					print('The number of rows should be greater than zero')
+	else:
+		print('Unknown formatting type or command')
+		
+	
+
