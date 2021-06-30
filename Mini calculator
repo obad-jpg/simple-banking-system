@@ -1,0 +1,14 @@
+x, y, z = input().split()
+result = 0
+if y == '+':
+    result = int(x) + int(z)
+elif y == '-':
+    result = int(x) - int(z)
+elif y == '*':
+    result = int(x) * int(z)
+elif y == '/':
+    result = int(x) / int(z)
+else:
+    print('mathematical operator must be between +,-,* and /')
+
+print(result)
