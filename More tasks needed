@@ -1,0 +1,56 @@
+import random
+
+mark = random.choice('+-*')
+a = random.randint(2, 9)
+b = random.randint(2, 9)
+c = None
+if mark == '*':
+    c = a * b
+elif mark == '+':
+    c = a + b
+elif mark == '-':
+    c = a - b
+print(a, mark, b)
+count = 0
+count1 = 0
+while True:
+    try:
+        n = int(input())
+        count += 1
+        if n == c:
+            print('Right!')
+            count1 +=1
+            if count == 5:
+                print(f'Your mark is {count1}/5.')
+                break
+            else:
+                mark = random.choice('+-*')
+                a = random.randint(2, 9)
+                b = random.randint(2, 9)
+                c = None
+                if mark == '*':
+                    c = a * b
+                elif mark == '+':
+                    c = a + b
+                elif mark == '-':
+                    c = a - b
+                print(a, mark, b)
+        else:
+            print('Wrong!')
+            if count == 5:
+                print(f'Your mark is {count1}/5.')
+                break
+            else:
+                mark = random.choice('+-*')
+                a = random.randint(2, 9)
+                b = random.randint(2, 9)
+                c = None
+                if mark == '*':
+                    c = a * b
+                elif mark == '+':
+                    c = a + b
+                elif mark == '-':
+                    c = a - b
+                print(a, mark, b)
+    except ValueError:
+        print('Incorrect format.')
