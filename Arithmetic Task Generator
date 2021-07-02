@@ -1,0 +1,148 @@
+import random
+
+mark = random.choice('+-*')
+a = random.randint(2, 9)
+b = random.randint(2, 9)
+c = None
+count = 0
+count1 = 0
+d = random.randint(11, 29)
+t = d ** 2
+if mark == '*':
+    c = a * b
+elif mark == '+':
+    c = a + b
+elif mark == '-':
+    c = a - b
+
+k = input('''Which level do you want? Enter a number: 
+    1 - simple operations with numbers 2-9
+    2 - integral squares of 11-29
+    ''')
+while True:
+    if k == '1':
+        print(a, mark, b)
+        while True:
+            try:
+                n = int(input())
+                count += 1
+                if n == c:
+                    print('Right!')
+                    count1 += 1
+                    if count == 5:
+                        print(f'Your mark is {count1}/5. Would you like to save the result? Enter yes or no.')
+                        ans = input()
+                        if ans == 'yes' or ans == 'YES' or ans == 'y' or ans == 'Yes':
+                            print('What is your name?')
+                            name = input()
+                            save = open('results.txt', 'a')
+                            save.write(f'{name}: {count1}/5 in level 1 (simple operations with numbers 2-9).')
+                            print('The results are saved in "results.txt"')
+                            save.close()
+                            exit()
+                        else:
+                            exit()
+                    else:
+                        mark = random.choice('+-*')
+                        a = random.randint(2, 9)
+                        b = random.randint(2, 9)
+                        c = None
+                        if mark == '*':
+                            c = a * b
+                        elif mark == '+':
+                            c = a + b
+                        elif mark == '-':
+                            c = a - b
+                        print(a, mark, b)
+
+                else:
+                    print('Wrong!')
+                    if count == 5:
+                        print(f'Your mark is {count1}/5. Would you like to save the result? Enter yes or no.')
+                        ans = input()
+                        if ans == 'yes' or ans == 'YES' or ans == 'y' or ans == 'Yes':
+                            print('What is your name?')
+                            name = input()
+                            save = open('results.txt', 'a')
+                            save.write(f'{name}: {count1}/5 in level 1 (simple operations with numbers 2-9).\n')
+                            print('The results are saved in "results.txt"')
+                            save.close()
+                            exit()
+                        else:
+                            exit()
+                    else:
+                        mark = random.choice('+-*')
+                        a = random.randint(2, 9)
+                        b = random.randint(2, 9)
+                        c = None
+                        if mark == '*':
+                            c = a * b
+                        elif mark == '+':
+                            c = a + b
+                        elif mark == '-':
+                            c = a - b
+                        print(a, mark, b)
+            except ValueError:
+                print('Wrong format! Try again.')
+                print(a, mark, b)
+
+
+
+
+    elif k == '2':
+        print(d)
+        while True:
+            try:
+                o = int(input())
+                count += 1
+                if o == t:
+                    print('Right!')
+                    count1 += 1
+                    if count == 5:
+                        print(f'Your mark is {count1}/5. Would you like to save the result? Enter yes or no.')
+                        ans = input()
+                        if ans == 'yes' or ans == 'YES' or ans == 'y' or ans == 'Yes':
+                            print('What is your name?')
+                            name = input()
+                            save = open('results.txt', 'a')
+                            save.write(f'{name}: {count1}/5 in level 2 (integral squares of 11-29).')
+                            print('The results are saved in "results.txt"')
+                            save.close()
+                            exit()
+                        else:
+                            exit()
+                    else:
+                        d = random.randint(11, 29)
+                        t = d ** 2
+                        print(d)
+                else:
+                    print('Wrong!')
+                    if count == 5:
+                        print(f'Your mark is {count1}/5. Would you like to save the result? Enter yes or no.')
+                        ans = input()
+                        if ans == 'yes' or ans == 'YES' or ans == 'y' or ans == 'Yes':
+                            print('What is your name?')
+                            name = input()
+                            save = open('results.txt', 'a')
+                            save.write(f'{name}: {count1}/5 in level 2 (integral squares of 11-29).')
+                            print('The results are saved in "results.txt"')
+                            save.close()
+                            exit()
+                        else:
+                            exit()
+                    else:
+                        d = random.randint(11, 29)
+                        t = d ** 2
+                        print(d)
+            except ValueError:
+                print('Wrong format! Try again.')
+                print(d)
+
+    else:
+        print('Incorrect format')
+        k = input('''Which level do you want? Enter a number: 
+    1 - simple operations with numbers 2-9
+    2 - integral squares of 11-29
+    ''')
+
+
