@@ -1,0 +1,22 @@
+import sqlite3
+conn = sqlite3.connect('food_blog.db')
+c = conn.cursor()
+c.execute('''CREATE TABLE meals(
+    meal_id INT PRIMARY KEY,
+    meal_name TEXT NOT NULL UNIQUE)''')
+conn.commit()
+c.execute('''CREATE TABLE ingredients(
+    ingredient_id INT PRIMARY KEY,
+    ingredient_name TEXT NOT NULL UNIQUE)''')
+conn.commit()
+c.execute('''CREATE TABLE measures(
+    measure_id INT PRIMARY KEY,
+    measure_name TEXT UNIQUE)''')
+conn.commit()
+c.execute('INSERT INTO meals VALUES(1, "breakfast"), (2, "brunch"), (3, "lunch"), (4, "supper");')
+conn.commit()
+c.execute('''INSERT INTO ingredients(ingredient_id, ingredient_name) VALUES(1, "milk"), (2, "cacao"), (3, "strawberry"), (4, "blueberry"), (5, "blackberry"), (6, "sugar");''')
+conn.commit()
+c.execute('''INSERT INTO measures(measure_id, measure_name) VALUES(1, "ml"), (2, "g"), (3, "l"), (4, "cup"), (5, "tbsp"), (6, "tsp"), (7, "dsp"), (8, "");''')
+conn.commit()
+conn.close()
