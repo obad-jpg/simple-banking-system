@@ -1,0 +1,64 @@
+import sqlite3
+import sys
+
+# args = sys.argv
+# database_name = args[1]
+database_name = "food_blog.db"
+
+connection = sqlite3.connect(database_name)
+cursor = connection.cursor()
+
+result = cursor.execute("""Create table if not exists meals( 
+                            meal_id integer Primary Key,
+                            meal_name text not null unique);""")
+cursor.execute("""Create table if not exists ingredients(
+                    ingredient_id integer primary key,
+                    ingredient_name text unique not null);""")
+cursor.execute("""Create table if not exists measures(
+                    measure_id integer primary key,
+                    measure_name text unique);""")
+cursor.execute("""Create table if not exists recipes(
+                    recipe_id integer primary key,
+                    recipe_name text not null,
+                    recipe_description text);""")
+cursor.execute("PRAGMA foreign_keys = ON;")
+cursor.execute("""Create table if not exists serve(
+                    serve_id integer primary key,
+                    meal_id integer not null,
+                    recipe_id integer not null,
+                    Foreign key (meal_id) References meals(meal_id),
+                    foreign key (recipe_id) references recipes(recipe_id));""")
+
+connection.commit()
+data = {"meals": ("breakfast", "brunch", "lunch", "supper"),
+        "ingredients": ("milk", "cacao", "strawberry", "blueberry", "blackberry", "sugar"),
+        "measures": ("ml", "g", "l", "cup", "tbsp", "tsp", "dsp", "")}
+for table, rows in data.items():
+    query = "Insert into " + table + " (" + table[:-1] + "_name) values "
+    for element in rows:
+        query += "('" + element + "'),"
+    query = query[:-1] + ";"
+    cursor.execute(query)
+    connection.commit()
+
+print("Pass the empty recipe name to exit.")
+
+result = cursor.execute("Select meal_id, meal_name from meals")
+all_rows = result.fetchall()
+meal_options = ""
+for index, meal in all_rows:
+    meal_options += str(index) + ") " + meal + " "
+
+while True:
+    name = input("Recipe name: ")
+    if name != "":
+        description = input("Recipe description")
+        recipe_id = cursor.execute("Insert into recipes (recipe_name, recipe_description) values ('" + name + "', '" + description + "');").lastrowid
+        meals = input("When the dish can be served: ").split()
+        for meal_id in meals:
+            cursor.execute("Insert into serve (meal_id, recipe_id) values (" + meal_id + ", " + str(recipe_id) + ");")
+        connection.commit()
+    else:
+        break
+
+connection.close()
