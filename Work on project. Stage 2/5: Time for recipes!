@@ -29,7 +29,7 @@ while True:
     if len(a) > 0:
         b = str(input('Recipe description: '))
         entry = (a, b)
-        c.execute("INSERT INTO recipes(recipe_id, recipe_name) VALUES(?, ?)", entry)
+        c.execute("INSERT INTO recipes(recipe_name, recipe_description) VALUES(?, ?)", entry)
         conn.commit()
     else:
         conn.close()
