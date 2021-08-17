@@ -1,0 +1,12 @@
+n = int(input())
+d = []
+count = 0
+for i in range(n):
+    a, b = input().split()
+    if b == "win":
+        d.append(a)
+        count += 1
+        
+        
+print(d)
+print(count)
