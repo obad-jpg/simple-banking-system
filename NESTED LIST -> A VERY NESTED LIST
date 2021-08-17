@@ -1,0 +1,17 @@
+a = input()
+b = input()
+c = input()
+d = []
+for i in range(3):
+    if i == 0:
+        d.append(a)
+    elif i == 1:
+        d.append([])
+        d[i].append(b)
+    elif i == 2:
+        d.append([])
+        d[i].append([])
+        d[i][0].append(c)
+        
+        
+print(d)
