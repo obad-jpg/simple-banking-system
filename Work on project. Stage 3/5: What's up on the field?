@@ -1,0 +1,48 @@
+x = input('Enter cells: ').upper()#O_OXXO_XX
+z = f'''---------
+| {x[0]} {x[1]} {x[2]} |
+| {x[3]} {x[4]} {x[5]} |
+| {x[6]} {x[7]} {x[8]} |
+---------'''
+y = []
+a = []
+b = [[x[0], x[4], x[8]], [x[2], x[4], x[6]]]
+count = 0
+k = 0
+u = 0
+p = 0
+for i in range(len(x)):
+	count += 1
+	if count == 1:
+		y.append([])
+		y[k].append(x[i])
+		a.append([])
+		a[k].append(x[u])
+		u += 3
+	elif count == 2:
+		y[k].append(x[i])
+		a[k].append(x[u])
+		u += 3
+	elif count == 3:
+		y[k].append(x[i])
+		a[k].append(x[u])
+		p += 1
+		u = p
+		count = 0
+		k += 1
+if ((y[0].count('X') == 3 or y[1].count('X') == 3 or y[2].count('X') == 3 or a[0].count('X') == 3 or a[1].count('X') == 3 or a[2].count('X') == 3 or b[0].count('X') == 3 or b[1].count('X') == 3) and (y[0].count('O') == 3 or y[1].count('O') == 3 or y[2].count('O') == 3 or a[0].count('O') == 3 or a[1].count('O') == 3 or a[2].count('O') == 3 or b[0].count('O') == 3 or b[1].count('O') == 3)) or (x.count('X') - x.count('O') >= 2) or (x.count('O') - x.count('X') >= 2):
+		print(z)
+		print('Impossible')
+		
+elif y[0].count('X') == 3 or y[1].count('X') == 3 or y[2].count('X') == 3 or a[0].count('X') == 3 or a[1].count('X') == 3 or a[2].count('X') == 3 or b[0].count('X') == 3 or b[1].count('X') == 3:
+	print(z)
+	print('X wins')
+elif y[0].count('O') == 3 or y[1].count('O') == 3 or y[2].count('O') == 3 or a[0].count('O') == 3 or a[1].count('O') == 3 or a[2].count('O') == 3 or b[0].count('O') == 3 or b[1].count('O') == 3:
+	print(z)
+	print('O wins')
+elif (y[0].count('X') < 3 and y[1].count('X') < 3 and y[2].count('X') < 3 and a[0].count('X') < 3 and a[1].count('X') < 3 and a[2].count('X') < 3 and b[0].count('X') < 3 and b[1].count('X') < 3 and y[0].count('O') < 3 and y[1].count('O') < 3 and y[2].count('O') < 3 and a[0].count('O') < 3 and a[1].count('O') < 3 and a[2].count('O') < 3 and b[0].count('O') < 3 and b[1].count('O') < 3) and ('_' in y[0] or '_' in y[1] or '_' in y[2] or '_' in a[0] or '_' in a[1] or '_' in a[2] or '_' in b[0] or '_' in b[1]):
+	print(z)
+	print('Game not finished')
+elif y[0].count('X') < 3 and y[1].count('X') < 3 and y[2].count('X') < 3 and a[0].count('X') < 3 and a[1].count('X') < 3 and a[2].count('X') < 3 and b[0].count('X') < 3 and b[1].count('X') < 3 and y[0].count('O') < 3 and y[1].count('O') < 3 and y[2].count('O') < 3 and a[0].count('O') < 3 and a[1].count('O') < 3 and a[2].count('O') < 3 and b[0].count('O') < 3 and b[1].count('O') < 3:
+	print(z)
+	print('Draw')
