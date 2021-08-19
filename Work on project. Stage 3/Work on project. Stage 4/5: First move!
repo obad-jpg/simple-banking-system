@@ -1,0 +1,139 @@
+x = input('Enter cells: ').upper()#O_OXXO_XX
+z = f'''---------
+| {x[0]} {x[1]} {x[2]} |
+| {x[3]} {x[4]} {x[5]} |
+| {x[6]} {x[7]} {x[8]} |
+---------'''
+a = z.replace('_', ' ')
+print(a)
+while True:
+	q = input('Enter the coordinates: ')
+	b = q[0]
+	c = q[2]
+	d = q[0]
+	f = q[2]
+	if  d.isalpha() or f.isalpha():
+		print('You should enter numbers!')
+	elif int(b) == 1 and int(c) == 1:
+		if x[0] == '_':
+			t = x[0].replace('_', 'X')
+			k = f'''---------
+| {t} {x[1]} {x[2]} |
+| {x[3]} {x[4]} {x[5]} |
+| {x[6]} {x[7]} {x[8]} |
+---------'''
+			v = k.replace('_', ' ')
+			print(v)
+			break
+		else:
+			print('This cell has been occupied! Choose another one')
+	elif int(b) == 1 and int(c) == 2:
+		if x[1] == '_':
+			t = x[1].replace('_', 'X')
+			k = f'''---------
+| {x[0]} {t} {x[2]} |
+| {x[3]} {x[4]} {x[5]} |
+| {x[6]} {x[7]} {x[8]} |
+---------'''
+			v = k.replace('_', ' ')
+			print(v)
+			break
+		else:
+			print('This cell has been occupied! Choose another one')
+	elif int(b) == 1 and int(c) == 3:
+		if x[2] == '_':
+			t = x[2].replace('_', 'X')
+			k = f'''---------
+| {x[0]} {x[1]} {t} |
+| {x[3]} {x[4]} {x[5]} |
+| {x[6]} {x[7]} {x[8]} |
+---------'''
+			v = k.replace('_', ' ')
+			print(v)
+			break
+		else:
+			print('This cell has been occupied! Choose another one')
+	elif int(b) == 2 and int(c) == 1:
+		if x[3] == '_':
+			t = x[3].replace('_', 'X')
+			k = f'''---------
+| {x[0]} {x[1]} {x[2]} |
+| {t} {x[4]} {x[5]} |
+| {x[6]} {x[7]} {x[8]} |
+---------'''
+			v = k.replace('_', ' ')
+			print(v)
+			break
+		else:
+			print('This cell has been occupied! Choose another one')
+	elif int(b) == 2 and int(c) == 2:
+		if x[4] == '_':
+			t = x[4].replace('_', 'X')
+			k = f'''---------
+| {x[0]} {x[1]} {x[2]} |
+| {x[3]} {t} {x[5]} |
+| {x[6]} {x[7]} {x[8]} |
+---------'''
+			v = k.replace('_', ' ')
+			print(v)
+			break
+		else:
+			print('This cell has been occupied! Choose another one')
+	elif int(b) == 2 and int(c) == 3:
+		if x[5] == '_':
+			t = x[5].replace('_', 'X')
+			k = f'''---------
+| {x[0]} {x[1]} {x[2]} |
+| {x[3]} {x[4]} {t} |
+| {x[6]} {x[7]} {x[8]} |
+---------'''
+			v = k.replace('_', ' ')
+			print(v)
+			break
+		else:
+			print('This cell has been occupied! Choose another one')
+	
+	elif int(b) == 3 and int(c) == 1:
+		if x[6] == '_':
+			t = x[6].replace('_', 'X')
+			k = f'''---------
+| {x[0]} {x[1]} {x[2]} |
+| {x[3]} {x[4]} {x[5]} |
+| {t} {x[7]} {x[8]} |
+---------'''
+			v = k.replace('_', ' ')
+			print(v)
+			break
+		else:
+			print('This cell has been occupied! Choose another one')
+	elif int(b) == 3 and int(c) == 2:
+		if x[7] == '_':
+			t = x[7].replace('_', 'X')
+			k = f'''---------
+| {x[0]} {x[1]} {x[2]} |
+| {x[3]} {x[4]} {x[5]} |
+| {x[6]} {t} {x[8]} |
+---------'''
+			v = k.replace('_', ' ')
+			print(v)
+			break
+		else:
+			print('This cell has been occupied! Choose another one')
+	elif int(b) == 3 and int(c) == 3:
+		if x[8] == '_':
+			t = x[7].replace('_', 'X')
+			k = f'''---------
+| {x[0]} {x[1]} {x[2]} |
+| {x[3]} {x[4]} {x[5]} |
+| {x[6]} {x[7]} {t} |
+---------'''
+			v = k.replace('_', ' ')
+			print(v)
+			break
+		else:
+			print('This cell has been occupied! Choose another one')
+	elif int(b) >= 4 or int(c) >= 4:
+		print('Coordinates should be from 1 to 3!')
+	
+		
+
