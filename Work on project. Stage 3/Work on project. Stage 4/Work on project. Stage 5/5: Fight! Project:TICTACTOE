@@ -1,0 +1,69 @@
+def board():
+    print(f'''
+    ---------
+    | {matrix[0][0]} {matrix[0][1]} {matrix[0][2]} |
+    | {matrix[1][0]} {matrix[1][1]} {matrix[1][2]} |
+    | {matrix[2][0]} {matrix[2][1]} {matrix[2][2]} |
+    ---------
+    ''')
+
+
+def check(letter, board):
+    for q in range(0, 3):
+        if board[q][0] == board[q][1] == board[q][2] == letter:
+            return True
+        elif board[0][q] == board[1][q] == board[2][q] == letter:
+            return True
+        elif board[0][0] == board[1][1] == board[2][2] == letter:
+            return True
+        elif board[0][2] == board[1][1] == board[2][0] == letter:
+            return True
+
+matrix = []
+for i in range(0, 8, 3):
+    matrix.append([' ', ' ', ' '])
+
+board()
+
+counter = 1
+_count = [matrix.count([" "])]
+x_count = [matrix.count(["X"])]
+o_count = [matrix.count(["O"])]
+while True:
+    if counter % 2 != 0:
+        mark = 'X'
+    else:
+        mark = 'O'
+    try:
+        x, y = input('Enter the coordinates: ').split(' ')
+        x = int(x)
+        y = int(y)
+        if y >= 4 or y <= 0:
+            print('Coordinates should be from 1 to 3!')
+            continue
+        if matrix[x - 1][y - 1] == ' ':
+            matrix[x - 1][y - 1] = mark  # check cell is not occupied
+            counter += 1
+            board()
+            continue
+        else:
+            print('This cell is occupied! Choose another one!')
+            continue
+
+    except ValueError:
+        print('You should enter numbers!')
+        continue
+    except IndexError:
+        print('Coordinates should be from 1 to 3!')
+        continue
+    finally:
+        if check(mark, matrix):
+            board()
+            print(f'{mark} wins')
+            exit()
+        else:
+           if counter == 10:
+           	print("Draw")
+           	exit()
+           
+         
