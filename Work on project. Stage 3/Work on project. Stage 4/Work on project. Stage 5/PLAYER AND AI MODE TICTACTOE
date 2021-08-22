@@ -103,6 +103,7 @@ if ans == 1:
 				if matrix[x - 1][y - 1] == ' ':
 					matrix[x - 1][y - 1] = mark  # check cell is not occupied
 					counter += 1
+					print('Computer turn')
 					board()
 					continue
 			finally:
@@ -183,5 +184,3 @@ elif ans == 2:
 					board()
 					print("Draw")
 					exit()
-           
-         
