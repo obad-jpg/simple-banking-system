@@ -166,7 +166,7 @@ GAME MENU
 								exit()
 	if ans == 2:
 		while True:
-			player_1 = input("Player , Select 'X' or 'O' : ").upper()
+			player_1 = input("Player 1, Select 'X' or 'O' : ").upper()
 			if player_1 == 'X':
 				print('Player 2 is "O"')
 				player_2 = 'O'
@@ -212,7 +212,7 @@ GAME MENU
 					if mark == player_1:
 						print("Game completed")
 						board()
-						print(f'player wins')
+						print(f'Player 1 wins')
 						print()
 						k = input("do you want to play again??, press 'y' for yes or 'n' for no: ")
 						if k == 'y':
@@ -220,10 +220,10 @@ GAME MENU
 						elif k == 'n':
 							print('Thanks for playing')
 							exit()
-					else:
+					elif mark == player_2:
 						print("Game completed")
 						board()
-						print(f'computer wins')
+						print(f'Player 2 wins')
 						print()
 						k = input("do you want to play again??, press 'y' for yes or 'n' for no: ")
 						if k == 'y':
