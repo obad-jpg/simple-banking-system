@@ -246,5 +246,5 @@ GAME MENU
 		print()
 		print('BYE!')
 		exit()
-	else:
+	elif ans >= 4 or ans < 0:
 		print('You must select numbers from 0 - 2')
