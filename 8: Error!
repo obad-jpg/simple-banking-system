@@ -1,0 +1,50 @@
+import random
+a = ("python", "java", "kotlinc", "javascript")
+y = random.choice(a)
+print("H A N G M A N")
+print()
+p = "-" * len(y)
+print(p)
+k = list(p)
+tries = 8
+t = "".join(k)
+r = []
+d = []
+while True:
+	if len(d) != len(k):
+		if tries > 0:
+			guess = input("Input a letter: ")
+			if len(guess) == 1:
+				if guess.islower():
+					if guess not in r:
+						r.append(guess)
+						if guess in y:
+							for i in range(len(y)):
+								if guess == y[i]:
+									k[i] = guess
+									d.append(k[i])
+									t = "".join(k)
+							if len(d) != len(k):
+								print("\n", t, sep=" ")
+						else:
+							print("That letter doesn't appear in the word")
+							tries -= 1
+							if tries >= 1:
+								print("\n", t, sep=" ")
+				
+					else:
+						print("You've already guessed this letter")
+						print("\n", t, sep=" ")
+				else:
+					print("Please enter a lowercase English letter")
+					print("\n", t, sep=" ")
+			else:
+				print("You should input a single letter")
+				print("\n", t, sep=" ")	
+		else:
+			print("You lost!")
+			break
+	else:
+		print(f"You guessed the word {t}!")
+		print("You survived!")
+		break			
