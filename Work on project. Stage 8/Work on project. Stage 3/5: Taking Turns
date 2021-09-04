@@ -1,0 +1,119 @@
+import random
+import re
+domino_set = []
+y = -1
+while y in range(-1, 7):
+    y += 1
+    for x in range(y, 7):
+        domino_set.append([y, x])
+
+
+def interface():
+    print('=' * 70)
+    print(f"Stock size: {len(stock_pieces)}\nComputer pieces: {len(computer_pieces)}")
+    print()
+    if len(domino_snake) > 6:
+        print(
+            f"{domino_snake[0]}{domino_snake[1]}{domino_snake[2]}...{domino_snake[-3]}{domino_snake[-2]}{domino_snake[-1]}")
+    else:
+        print(''.join([str(m) for m in domino_snake]))
+    print()
+    print('Your pieces:')
+    for index, element in enumerate(player_pieces):
+        print(f"{index + 1}:{element}")
+    print()
+
+
+def move_player_func():
+    while True:
+        move_player_str = input("Status: It's your turn to make a move. Enter your command.")
+        if not re.match("^[0-9]*$", move_player_str):
+            print('Invalid input. Please try again.')
+            move_player_str = input("Status: It's your turn to make a move. Enter your command.")
+        move_player = int(move_player_str)
+        if move_player in range(-(len(player_pieces)), 0):
+            removed = player_pieces.pop(abs(move_player) - 1)
+            domino_snake.insert(0, removed)
+            interface()
+            break
+        elif move_player in range(1, len(player_pieces) + 1):
+            removed = player_pieces.pop(move_player - 1)
+            domino_snake.append(removed)
+            interface()
+            break
+        elif move_player == 0:
+            from_stock = random.choice(stock_pieces)
+            player_pieces.append(from_stock)
+            stock_pieces.remove(from_stock)
+            interface()
+            break
+
+
+def move_computer_func():
+    while True:
+        move_computer_line = input("Status: Computer is about to make a move. Press Enter to continue...")
+        move_computer = random.randrange(-(len(computer_pieces)), len(computer_pieces) + 1)
+        if move_computer in range(-(len(computer_pieces)), 0):
+            removed = computer_pieces.pop(abs(move_computer) - 1)
+            domino_snake.insert(0, removed)
+            interface()
+            break
+        elif move_computer in range(1, len(computer_pieces) + 1):
+            removed = computer_pieces.pop(move_computer - 1)
+            domino_snake.append(removed)
+            interface()
+            break
+        elif computer_pieces == 0:
+            from_stock = random.choice(stock_pieces)
+            computer_pieces.append(from_stock)
+            stock_pieces.remove(from_stock)
+            interface()
+            break
+
+
+def winning_conditions():
+    global final_status
+    draw_condition_8 = ''.join([str(m) for m in domino_snake]).count('1')
+    if len(player_pieces) == 0:
+        print("Status: The game is over. You won!")
+        final_status = 'player won'
+        return True
+    elif len(computer_pieces) == 0:
+        print("Status: The game is over. The computer won!")
+        final_status = 'computer_won'
+        return True
+    elif domino_snake[0][0] == domino_snake[-1][-1] and draw_condition_8 == 8:
+        print("The game is over. It's a draw!")
+        final_status = 'draw'
+        return True
+
+
+while True:
+    stock_pieces = random.sample(domino_set, 14)
+    computer_pieces = random.sample([z for z in domino_set if z not in stock_pieces], 7)
+    player_pieces = random.sample([z for z in domino_set if z not in stock_pieces + computer_pieces], 7)
+    domino_snake = []
+    start_piece = [6, 6] or [5, 5]
+    final_status = None
+    if start_piece in computer_pieces:
+        computer_pieces.remove(start_piece)
+        domino_snake.append(start_piece)
+        interface()
+        while True:
+            if winning_conditions():
+                break
+            move_player_func()
+            move_computer_func()
+
+    elif start_piece in player_pieces:
+        player_pieces.remove(start_piece)
+        domino_snake.append(start_piece)
+        interface()
+        while True:
+            if winning_conditions():
+                break
+            move_computer_func()
+            move_player_func()
+
+    if final_status is not None:
+        break
