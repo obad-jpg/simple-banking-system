@@ -1,0 +1,139 @@
+import random
+
+def generate_full_set():
+    global full_set
+    full_set = []
+    for num1 in range(0, 7):
+        for num2 in range(num1, 7):
+            full_set.append([num1, num2])
+
+def split_set():
+    global computer_pieces, player_pieces, stock_pieces
+    random.shuffle(full_set)
+    computer_pieces = full_set[:7]
+    player_pieces = full_set[7:14]
+    stock_pieces = full_set[14:28]
+
+def doubles_check():
+    doubles = []
+    global max_double
+    for i in computer_pieces + player_pieces:    
+        if len(set(i)) == 1:
+            doubles.append(i)
+    if i == []:
+        split_set()
+        doubles_check()
+    else:
+        max_double = max(doubles)
+
+def status_set():
+    global domino_snake, status
+    domino_snake = []
+    if max_double in computer_pieces:
+        computer_pieces.remove(max_double)
+        domino_snake.append(max_double)
+        status = "player"
+    else:
+        player_pieces.remove(max_double)
+        domino_snake.append(max_double)
+        status = "computer"
+
+generate_full_set()
+split_set()
+doubles_check()
+status_set()  
+
+def header():
+    print("=" * 70, f"Stock size: {len(stock_pieces)}", f"Computer pieces: {len(computer_pieces)}\n", sep="\n")
+    if len(domino_snake) > 6:
+        print(*domino_snake[0:3], "...", *domino_snake[-3:])
+    else:
+        print(*domino_snake)
+    print("\nYour pieces:")
+    for piece in player_pieces:
+        print(f"""{(1 + player_pieces.index(piece))}: {piece}""")
+
+def play():
+    header()
+    if status == "computer":
+        print("\nStatus: Computer is about to make a move. Press Enter to continue...")
+        next_move = input()
+        computers_turn()
+        check_win()
+    elif status == "player":
+        print("\nStatus: It's your turn to make a move. Enter your command.")
+        your_turn()
+        check_win()
+        
+def your_turn():
+    global status, player_pieces, stock_pieces, domino_snake
+    move = input()
+    try: 
+        move = int(move)
+    except:
+        print("Invalid input. Please try again.")
+        your_turn()
+        return
+    if abs(int(move)) > len(player_pieces):
+        print("Invalid input. Please try again.")
+        your_turn()
+    elif int(move) > 0 and domino_snake[-1][-1] in player_pieces[abs(move) - 1]:
+        if player_pieces[abs(move) - 1][0] == domino_snake[-1][-1]:
+            domino_snake.append(player_pieces[abs(move) - 1])
+        else:
+            domino_snake.append(player_pieces[abs(move) - 1][::-1])
+        del player_pieces[abs(move) - 1]
+    elif int(move) < 0 and domino_snake[0][0] in player_pieces[abs(move) - 1]:
+        if player_pieces[abs(move) - 1][-1] == domino_snake[0][0]:
+            domino_snake.insert(0, player_pieces[abs(move) - 1])
+        else:
+            domino_snake.insert(0, player_pieces[abs(move) - 1][::-1])
+        del player_pieces[abs(move) - 1]
+    elif int(move) == 0:
+        if len(stock_pieces) > 0:
+            player_pieces.append(stock_pieces[0])
+            del stock_pieces[0]
+    else:
+        print("Illegal move. Please try again.")
+        your_turn()
+    status = "computer"
+    
+def computers_turn():
+    global status, computer_pieces, stock_pieces, domino_snake
+    move = random.randint(len(computer_pieces) * -1, len(computer_pieces))
+    
+    
+    if move > 0 and domino_snake[-1][-1] in computer_pieces[abs(move) - 1]:
+        if computer_pieces[abs(move) - 1][0] == domino_snake[-1][-1]:
+            domino_snake.append(computer_pieces[abs(move) - 1])
+        else:
+            domino_snake.append(computer_pieces[abs(move) - 1][::-1])
+        del computer_pieces[abs(move) - 1]
+    elif move < 0 and domino_snake[0][0] in computer_pieces[abs(move) - 1]:
+        if computer_pieces[abs(move) - 1][-1] == domino_snake[0][0]:
+            domino_snake.insert(0, computer_pieces[abs(move) - 1])
+        else:
+            domino_snake.insert(0, computer_pieces[abs(move) - 1][::-1])
+        del computer_pieces[abs(move) - 1]
+    elif move == 0:
+        if len(stock_pieces) > 0:
+            computer_pieces.append(stock_pieces[0])
+            del stock_pieces[0]
+    else:
+        computers_turn()
+    status = "player"
+
+def check_win():
+    if len(player_pieces) == 0:
+        header()
+        print("Status: The game is over. You won!")
+    elif len(computer_pieces) == 0:
+        header()
+        print("Status: The game is over. The computer won!")
+    elif domino_snake[0][0] == domino_snake[-1][-1] and domino_snake.count(domino_snake[0][0]) > 7:
+        header()
+        print("Status: The game is over. It's a draw!")
+    else:
+        play()
+    
+play()
