@@ -1,0 +1,118 @@
+import argparse
+import math
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--type", type=str, choices=["diff", "annuity"])
+parser.add_argument("--periods", type=int)
+parser.add_argument("--interest", type=float)
+parser.add_argument("--principal", type=int)
+parser.add_argument("--payment", type=int)
+
+args = parser.parse_args()
+list = [args.type, args.periods, args.payment, args.interest,args.principal]
+list_1 = [args.periods, args.interest, args.payment, args.principal]
+def none():
+	for i in list:
+		if i == None:
+			index = list.index(i)
+			list.pop(index)
+
+def check(t):
+	global n
+	if type(n) == float:
+		n = int(n) + 1
+		return True
+	else:
+		return False
+def negative():
+	for i in list_1:
+		if i != None:
+			if i < 0:
+				print("Incorrect parameters.")
+				exit()
+if args.type != None:
+	if args.type in ["diff", "annuity"]:
+		none()
+		if args.type == "diff":
+			negative()
+			if args.payment == None and len(list) == 4:
+				i = (args.interest)/(100 * 12)
+				z = 0
+				for k in range(1, args.periods + 1):
+					result_1 = (args.principal/args.periods) + (i * (args.principal - (args.principal * (k - 1))/args.periods))
+					result_2 = round((args.principal/args.periods) + (i * (args.principal - (args.principal * (k - 1))/args.periods)))
+					if result_1 == result_2:
+						print(f"Month {k}: payment is {int(result_1)}")
+						z += result_1
+					else:
+						print(f"Month {k}: payment is {int(int(result_1) + 1)}")
+						z += int(result_1) + 1
+				overpayment = z - args.principal
+				print()
+				print(f"Overpayment = {int(overpayment)}")
+			else:
+				print("Incorrect parameters.")
+		else:
+			negative()
+			if args.payment == None and len(list) == 4:
+				i = (args.interest) / (100 * 12)
+				result_1= (args.principal * i * ((1 + i) ** args.periods)) / (((1 + i) ** args.periods) - 1)
+				result_2 = round((args.principal * i * ((1 + i) ** args.periods)) // (((1 + i) ** args.periods) - 1))
+				if result_1 == result_2:
+					print(f"Your annuity payment = {int(result_1)}!")
+					overpayment = (result_1 * args.periods) - args.principal
+					print(f"Overpayment = {int(overpayment)}")
+				else:
+					print(f"Your annuity payment = {int(int(result_1) + 1)}!")
+					overpayment = (int(result_1 + 1) * args.periods) - args.principal
+					print(f"Overpayment = {int(overpayment)}")
+			elif args.principal == None and len(list) == 4:
+				i = (args.interest) / (100 * 12)
+				p = (args.payment) / ((i * (1 + i) ** args.periods) / (((1 + i) ** args.periods) - 1))
+				print(p)
+				print(f"Your loan principal = {int(p)}!")
+				overpayment = (args.payment * args.periods) - int(p)
+				print(f"Overpayment = {int(overpayment)}")
+			elif args.periods == None and len(list) == 4:
+				print(len(list))
+				print(list)
+				i = (args.interest) / (100 * 12)
+				result = (args.payment) / (args.payment - i * args.principal)
+				n = math.log(result, 1 + i)
+				check(n)
+				if n < 12:
+					if n == 1:
+						print(f"It will take {n} month to repay this loan!")
+					else:
+						print(f"It will take {n} months to repay this loan!")
+				else:
+					years = round(n // 12)
+					months = n % 12
+					if years == 1:
+						if months == 0:
+							print(f"It will take 1 year to repay this loan!")
+						elif months == 1:
+							print(f"It will take 1 year and 1 month to repay this loan!")
+						else:
+							print(f"It will take 1 year and {months} months to repay this loan!")
+					else:
+						if months == 0:
+							print(f"It will take {years} years to repay this loan!")
+						elif months == 1:
+							print(f"It will take {years} years and 1 month to repay this loan!")
+						else:
+							print(f"It will take {years} years and {months} months to repay this loan!")
+				overpayment = (args.payment * n) - args.principal
+				print(f"Overpayment = {int(overpayment)}")
+			else:
+				print("Incorrect parameters.")
+	else:
+		print("Incorrect parameters.")
+else:
+	print("Incorrect parameters.")
+					
+					
+					
+					
+			
+	
